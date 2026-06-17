@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.compat
 
-package rkr.simplekeyboard.inputmethod.compat;
+import android.content.Context
+import android.content.SharedPreferences
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-
-public class PreferenceManagerCompat {
-    public static Context getDeviceContext(Context context) {
-        return context.createDeviceProtectedStorageContext();
+object PreferenceManagerCompat {
+    @JvmStatic
+    fun getDeviceContext(context: Context): Context? {
+        return context.createDeviceProtectedStorageContext()
     }
 
-    public static SharedPreferences getDeviceSharedPreferences(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(getDeviceContext(context));
+    @JvmStatic
+    fun getDeviceSharedPreferences(context: Context): SharedPreferences? {
+        val deviceContext = getDeviceContext(context) ?: return null
+        return deviceContext.getSharedPreferences(
+            deviceContext.packageName + "_preferences", Context.MODE_PRIVATE)
     }
 }
