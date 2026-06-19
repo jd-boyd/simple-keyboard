@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId = "rkr.simplekeyboard.inputmethod"
-        minSdk = 24
+        minSdk = 31
         targetSdk = 36
         versionCode = 145
         versionName = "6.4"
@@ -16,10 +16,10 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = true
+            isMinifyEnabled = false //true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
@@ -27,13 +27,13 @@ android {
     namespace = "rkr.simplekeyboard.inputmethod"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_21 // 17
+        targetCompatibility = JavaVersion.VERSION_21 // 17
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21) //17
         }
     }
 }

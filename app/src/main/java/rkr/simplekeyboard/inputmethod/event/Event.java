@@ -65,7 +65,7 @@ public class Event {
     final private static int FLAG_CONSUMED = 0x4;
 
     final private int mEventType; // The type of event - one of the constants above
-    // The code point associated with the event, if relevant. This is a unicode code point, and
+    // The code point associated with the event, if relevant. This is a Unicode code point, and
     // has nothing to do with other representations of the key. It is only relevant if this event
     // is of KEYPRESS type, but for a mode key like hankaku/zenkaku or ctrl, there is no code point
     // associated so this should be NOT_A_CODE_POINT to avoid unintentional use of its value when
