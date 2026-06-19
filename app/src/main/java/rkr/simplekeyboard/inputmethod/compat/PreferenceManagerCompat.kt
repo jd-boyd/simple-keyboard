@@ -28,6 +28,8 @@ object PreferenceManagerCompat {
     fun getDeviceSharedPreferences(context: Context): SharedPreferences? {
         val deviceContext = getDeviceContext(context) ?: return null
         return deviceContext.getSharedPreferences(
-            deviceContext.packageName + "_preferences", Context.MODE_PRIVATE)
+            deviceContext.packageName + "_preferences",
+            Context.MODE_PRIVATE,
+        )
     }
 }
