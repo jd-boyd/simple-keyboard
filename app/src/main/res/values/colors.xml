@@ -24,30 +24,30 @@
 
     <!-- Color resources for LXX_System theme. -->
     <!-- Material theme values @color/material_* are private, so they are copied here. -->
-    <color name="background_lxx_system">#fffafafa</color>
-    <color name="background_secondary_lxx_system">#fff5f5f5</color>
-    <color name="key_text_color_lxx_system">#de000000</color>
-    <color name="key_functional_text_color_lxx_system">#70000000</color>
-    <color name="key_text_inactive_color_lxx_system">#de000000</color>
-    <color name="key_hint_letter_color_lxx_system">#90000000</color>
+    <color name="background_lxx_system">#FF2A2A2A</color>
+    <color name="background_secondary_lxx_system">#FF2A2A2A</color>
+    <color name="key_text_color_lxx_system">#FFD6D6D6</color>
+    <color name="key_functional_text_color_lxx_system">#FFD6D6D6</color>
+    <color name="key_text_inactive_color_lxx_system">#FFD6D6D6</color>
+    <color name="key_hint_letter_color_lxx_system">#FFD6D6D6</color>
     <color name="key_background_normal_lxx_system">#ffd6d7d7</color>
     <color name="key_background_pressed_lxx_system">#20000000</color>
     <!-- Color resources for LXX_Light theme. -->
-    <color name="background_lxx_light">#ECEFF1</color>
-    <color name="background_secondary_lxx_light">#20000000</color>
-    <color name="key_text_color_lxx_light">#37474F</color>
-    <color name="key_functional_text_color_lxx_light">#CC37474F</color>
-    <color name="key_text_inactive_color_lxx_light">#B337474F</color>
-    <color name="key_hint_letter_color_lxx_light">#B337474F</color>
+    <color name="background_lxx_light">#FF2A2A2A</color>
+    <color name="background_secondary_lxx_light">#FF2A2A2A</color>
+    <color name="key_text_color_lxx_light">#FFD6D6D6</color>
+    <color name="key_functional_text_color_lxx_light">#FFD6D6D6</color>
+    <color name="key_text_inactive_color_lxx_light">#FFD6D6D6</color>
+    <color name="key_hint_letter_color_lxx_light">#FFD6D6D6</color>
     <color name="key_background_normal_lxx_light">#26080B0C</color>
     <color name="key_background_pressed_lxx_light">#400E1214</color>
     <!-- Color resources for LXX_Dark theme. -->
-    <color name="background_lxx_dark">#263238</color>
-    <color name="background_secondary_lxx_dark">#20FFFFFF</color>
-    <color name="key_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_functional_text_color_lxx_dark">#CCFFFFFF</color>
-    <color name="key_text_inactive_color_lxx_dark">#80FFFFFF</color>
-    <color name="key_hint_letter_color_lxx_dark">#80FFFFFF</color>
+    <color name="background_lxx_dark">#FF2A2A2A</color>
+    <color name="background_secondary_lxx_dark">#FF2A2A2A</color>
+    <color name="key_text_color_lxx_dark">#FFD6D6D6</color>
+    <color name="key_functional_text_color_lxx_dark">#FFD6D6D6</color>
+    <color name="key_text_inactive_color_lxx_dark">#FFD6D6D6</color>
+    <color name="key_hint_letter_color_lxx_dark">#FFD6D6D6</color>
     <color name="key_background_normal_lxx_dark">#2AAAAAAA</color>
     <color name="key_background_pressed_lxx_dark">#4AAAAAAA</color>
     <!-- Dimensions for all themes. -->
