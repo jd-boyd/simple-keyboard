@@ -16,7 +16,7 @@
 
 set -euo pipefail
 
-APP_ID="rkr.simplekeyboard.inputmethod"
+APP_ID="io.cuetime.cuetimekeyboard.inputmethod"
 IME_COMPONENT="${APP_ID}/.latin.LatinIME"
 
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"

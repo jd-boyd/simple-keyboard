@@ -16,7 +16,7 @@
 #   public *;
 #}
 
--keep class rkr.simplekeyboard.inputmethod.R
--keep class rkr.simplekeyboard.inputmethod.latin.settings.SettingsFragment
--keep class rkr.simplekeyboard.inputmethod.latin.settings.LanguagesSettingsFragment
--keep class rkr.simplekeyboard.inputmethod.latin.settings.SingleLanguageSettingsFragment
+-keep class io.cuetime.cuetimekeyboard.inputmethod.R
+-keep class io.cuetime.cuetimekeyboard.inputmethod.latin.settings.SettingsFragment
+-keep class io.cuetime.cuetimekeyboard.inputmethod.latin.settings.LanguagesSettingsFragment
+-keep class io.cuetime.cuetimekeyboard.inputmethod.latin.settings.SingleLanguageSettingsFragment

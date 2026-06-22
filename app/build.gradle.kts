@@ -7,7 +7,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "rkr.simplekeyboard.inputmethod"
+        applicationId = "io.cuetime.cuetimekeyboard.inputmethod"
         minSdk = 31
         targetSdk = 36
         versionCode = 145
@@ -24,7 +24,7 @@ android {
         }
     }
 
-    namespace = "rkr.simplekeyboard.inputmethod"
+    namespace = "io.cuetime.cuetimekeyboard.inputmethod"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
