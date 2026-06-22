@@ -37,7 +37,6 @@ import rkr.simplekeyboard.inputmethod.keyboard.KeyboardLayoutSet
  * - Delete swipe
  */
 class PreferencesSettingsFragment : SubScreenFragment() {
-    @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         addPreferencesFromResource(R.xml.prefs_screen_preferences)

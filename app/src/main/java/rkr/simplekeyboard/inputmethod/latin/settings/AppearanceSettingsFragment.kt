@@ -27,7 +27,7 @@ import rkr.simplekeyboard.inputmethod.keyboard.KeyboardTheme.Companion.getKeyboa
  * "Appearance" settings sub screen.
  */
 class AppearanceSettingsFragment : SubScreenFragment() {
-    public override fun onCreate(icicle: Bundle?) {
+    override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         addPreferencesFromResource(R.xml.prefs_screen_appearance)
 
@@ -42,14 +42,14 @@ class AppearanceSettingsFragment : SubScreenFragment() {
         ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME))
 
         val colorPreference = findPreference(Settings.PREF_KEYBOARD_COLOR)
-        if (colorPreference.isEnabled()) {
+        if (colorPreference.isEnabled) {
             val prefs = sharedPreferences
             val theme = KeyboardTheme.getKeyboardTheme(prefs!!)
-            colorPreference.setEnabled(theme!!.mCustomColorSupport)
+            colorPreference.isEnabled = theme!!.mCustomColorSupport
         }
     }
 
-    public override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
+    override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
         if (KeyboardTheme.KEYBOARD_THEME_KEY == key) {
             ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME))
 
@@ -150,7 +150,7 @@ class AppearanceSettingsFragment : SubScreenFragment() {
             return
         }
         val prefs = sharedPreferences
-        val context = this.getActivity().getApplicationContext()
+        val context = activity!!.applicationContext
         pref.setInterface(object : ColorDialogPreference.ValueProxy {
             override fun writeValue(value: Int, key: String?) {
                 prefs!!.edit().putInt(key, value).apply()

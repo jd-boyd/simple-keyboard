@@ -19,13 +19,6 @@ import android.content.Context
 import android.content.SharedPreferences
 
 object PreferenceManagerCompat {
-    @Deprecated("Use createDeviceProtectedStorageContext() directly. " +
-            "Fragments should use PreferenceManager.setStorageDeviceProtected() instead.")
-    @JvmStatic
-    fun getDeviceContext(context: Context): Context? {
-        return context.createDeviceProtectedStorageContext()
-    }
-
     @JvmStatic
     fun getDeviceSharedPreferences(context: Context): SharedPreferences? {
         val deviceContext = context.createDeviceProtectedStorageContext() ?: return null

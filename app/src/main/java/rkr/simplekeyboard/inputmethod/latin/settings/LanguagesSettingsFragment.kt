@@ -88,12 +88,12 @@ class LanguagesSettingsFragment : PreferenceFragment() {
         val addLanguageMenuItem = menu.findItem(R.id.action_add_language)
         MenuItemIconColorCompat.matchMenuIconColor(
             mView, addLanguageMenuItem,
-            getActivity().getActionBar()
+            activity!!.actionBar
         )
         val removeLanguageMenuItem = menu.findItem(R.id.action_remove_language)
         MenuItemIconColorCompat.matchMenuIconColor(
             mView, removeLanguageMenuItem,
-            getActivity().getActionBar()
+            activity!!.actionBar
         )
     }
 
@@ -117,7 +117,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
      * Build the preferences and them to this settings screen.
      */
     private fun buildContent() {
-        val context: Context? = getActivity()
+        val context: Context = activity!!
         val group: PreferenceGroup = getPreferenceScreen()
         group.removeAll()
 
@@ -194,7 +194,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
     private fun buildLanguagePreferences(
         locales: SortedSet<Locale>,
         group: PreferenceGroup,
-        context: Context?
+        context: Context
     ) {
         for (locale in locales) {
             val localeString = LocaleUtils.getLocaleString(locale)
@@ -257,7 +257,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
                     }
 
                     // refresh the list of enabled languages
-                    getActivity().invalidateOptionsMenu()
+                    activity!!.invalidateOptionsMenu()
                     buildContent()
                 }
             })
@@ -285,7 +285,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
                     }
 
                     // refresh the list of enabled languages
-                    getActivity().invalidateOptionsMenu()
+                    activity!!.invalidateOptionsMenu()
                     buildContent()
                 }
             })
@@ -360,7 +360,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
     /**
      * Preference to link to a language specific settings screen.
      */
-    private class SingleLanguagePreference(context: Context?, private val mLocale: String?) :
+    private class SingleLanguagePreference(context: Context, private val mLocale: String?) :
         Preference(context) {
         private var mExtras: Bundle? = null
 
@@ -375,16 +375,12 @@ class LanguagesSettingsFragment : PreferenceFragment() {
             setFragment(SingleLanguageSettingsFragment::class.java.getName())
         }
 
-        override fun getExtras(): Bundle? {
+        override fun getExtras(): Bundle {
             if (mExtras == null) {
                 mExtras = Bundle()
                 mExtras!!.putString(SingleLanguageSettingsFragment.LOCALE_BUNDLE_KEY, mLocale)
             }
-            return mExtras
-        }
-
-        override fun peekExtras(): Bundle? {
-            return mExtras
+            return mExtras!!
         }
     }
 

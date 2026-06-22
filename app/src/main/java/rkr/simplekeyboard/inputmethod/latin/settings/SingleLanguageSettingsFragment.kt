@@ -42,15 +42,16 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
 
         RichInputMethodManager.init(getActivity())
         mRichImm = RichInputMethodManager.getInstance()
+
         addPreferencesFromResource(R.xml.empty_settings)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        val context: Context = getActivity()
+        val context: Context = activity!!
 
-        val args = getArguments()
+        val args = arguments
         if (args != null) {
-            val locale = getArguments().getString(LOCALE_BUNDLE_KEY)
+            val locale = args.getString(LOCALE_BUNDLE_KEY)
             buildContent(locale, context)
         }
 

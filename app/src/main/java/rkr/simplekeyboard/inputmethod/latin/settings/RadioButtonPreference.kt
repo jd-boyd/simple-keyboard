@@ -27,13 +27,14 @@ import rkr.simplekeyboard.inputmethod.R
  * Radio Button preference
  */
 open class RadioButtonPreference @JvmOverloads constructor(
-    context: Context?, attrs: AttributeSet? = null,
+    context: Context?,
+    attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.preferenceStyle
 ) : Preference(context, attrs, defStyleAttr) {
     interface OnRadioButtonClickedListener {
         /**
          * Called when this preference needs to be saved its state.
-         * 
+         *
          * @param preference This preference.
          */
         fun onRadioButtonClicked(preference: RadioButtonPreference?)
@@ -42,10 +43,8 @@ open class RadioButtonPreference @JvmOverloads constructor(
     private var mIsSelected = false
     private var mRadioButton: RadioButton? = null
     private var mListener: OnRadioButtonClickedListener? = null
-    private val mClickListener: View.OnClickListener = object : View.OnClickListener {
-        override fun onClick(v: View?) {
-            callListenerOnRadioButtonClicked()
-        }
+    private val mClickListener: View.OnClickListener = View.OnClickListener {
+        callListenerOnRadioButtonClicked()
     }
 
     init {
@@ -57,16 +56,14 @@ open class RadioButtonPreference @JvmOverloads constructor(
     }
 
     fun callListenerOnRadioButtonClicked() {
-        if (mListener != null) {
-            mListener!!.onRadioButtonClicked(this)
-        }
+        mListener?.onRadioButtonClicked(this)
     }
 
     override fun onBindView(view: View) {
         super.onBindView(view)
-        mRadioButton = view.findViewById<View?>(R.id.radio_button) as RadioButton?
-        mRadioButton!!.setChecked(mIsSelected)
-        mRadioButton!!.setOnClickListener(mClickListener)
+        mRadioButton = view.findViewById(R.id.radio_button)
+        mRadioButton?.isChecked = mIsSelected
+        mRadioButton?.setOnClickListener(mClickListener)
         view.setOnClickListener(mClickListener)
     }
 
@@ -75,9 +72,7 @@ open class RadioButtonPreference @JvmOverloads constructor(
             return
         }
         mIsSelected = selected
-        if (mRadioButton != null) {
-            mRadioButton!!.setChecked(selected)
-        }
+        mRadioButton?.isChecked = selected
         notifyChanged()
     }
 }

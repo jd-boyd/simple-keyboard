@@ -31,26 +31,23 @@ class SettingsFragment : InputMethodSettingsFragment() {
         super.onCreate(icicle)
         setHasOptionsMenu(true)
         addPreferencesFromResource(R.xml.prefs)
-        val preferenceScreen = getPreferenceScreen()
-        preferenceScreen.setTitle(
-            ApplicationUtils.getActivityTitleResId(getActivity(), SettingsActivity::class.java)
-        )
-        val res = getResources()
+        val preferenceScreen = preferenceScreen
+        preferenceScreen.title = ApplicationUtils.getActivityTitleResId(activity, SettingsActivity::class.java)
+            .let { getString(it) }
+        val res = resources
 
-        findPreference("privacy_policy").setOnPreferenceClickListener(object :
+        findPreference("privacy_policy")?.setOnPreferenceClickListener(
             Preference.OnPreferenceClickListener {
-            override fun onPreferenceClick(preference: Preference?): Boolean {
                 openUrl(res.getString(R.string.privacy_policy_url))
-                return true
+                true
             }
-        })
-        findPreference("license").setOnPreferenceClickListener(object :
+        )
+        findPreference("license")?.setOnPreferenceClickListener(
             Preference.OnPreferenceClickListener {
-            override fun onPreferenceClick(preference: Preference?): Boolean {
                 openUrl(res.getString(R.string.license_url))
-                return true
+                true
             }
-        })
+        )
     }
 
     private fun openUrl(uri: String?) {

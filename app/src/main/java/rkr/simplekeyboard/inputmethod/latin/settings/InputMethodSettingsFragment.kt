@@ -20,7 +20,6 @@ package rkr.simplekeyboard.inputmethod.latin.settings
 import android.content.Context
 import android.os.Bundle
 import android.preference.PreferenceFragment
-import rkr.simplekeyboard.inputmethod.compat.PreferenceManagerCompat.getDeviceContext
 
 /**
  * This is a helper class for an IME's settings preference fragment. It's recommended for every
@@ -28,15 +27,15 @@ import rkr.simplekeyboard.inputmethod.compat.PreferenceManagerCompat.getDeviceCo
  */
 abstract class InputMethodSettingsFragment : PreferenceFragment() {
     private val mSettings = InputMethodSettingsImpl()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val context: Context = getActivity()
-        setPreferenceScreen(
-            getPreferenceManager().createPreferenceScreen(
-                getDeviceContext(context)
-            )
+        val context: Context = activity!!
+        preferenceManager.setStorageDeviceProtected()
+        preferenceScreen = preferenceManager.createPreferenceScreen(
+            context
         )
-        mSettings.init(context, getPreferenceScreen())
+        mSettings.init(context, preferenceScreen)
     }
 
     /**

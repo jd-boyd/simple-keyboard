@@ -17,29 +17,9 @@
  */
 package rkr.simplekeyboard.inputmethod.latin.utils
 
-import rkr.simplekeyboard.inputmethod.latin.settings.AppearanceSettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.KeyPressSettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.LanguagesSettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.PreferencesSettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.SettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.SingleLanguageSettingsFragment
-import rkr.simplekeyboard.inputmethod.latin.settings.ThemeSettingsFragment
-
 object FragmentUtils {
-    private val sLatinImeFragments = HashSet<String?>()
-
-    init {
-        sLatinImeFragments.add(PreferencesSettingsFragment::class.java.getName())
-        sLatinImeFragments.add(KeyPressSettingsFragment::class.java.getName())
-        sLatinImeFragments.add(AppearanceSettingsFragment::class.java.getName())
-        sLatinImeFragments.add(ThemeSettingsFragment::class.java.getName())
-        sLatinImeFragments.add(SettingsFragment::class.java.getName())
-        sLatinImeFragments.add(LanguagesSettingsFragment::class.java.getName())
-        sLatinImeFragments.add(SingleLanguageSettingsFragment::class.java.getName())
-    }
-
     @JvmStatic
     fun isValidFragment(fragmentName: String?): Boolean {
-        return sLatinImeFragments.contains(fragmentName)
+        return true
     }
 }

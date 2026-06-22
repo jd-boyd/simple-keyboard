@@ -25,7 +25,7 @@ import rkr.simplekeyboard.inputmethod.latin.AudioAndHapticFeedbackManager
 
 /**
  * "Preferences" settings sub screen.
- * 
+ *
  * This settings sub screen handles the following input preferences.
  * - Vibrate on keypress
  * - Keypress vibration duration
@@ -35,7 +35,7 @@ import rkr.simplekeyboard.inputmethod.latin.AudioAndHapticFeedbackManager
  * - Key long press delay
  */
 class KeyPressSettingsFragment : SubScreenFragment() {
-    public override fun onCreate(icicle: Bundle?) {
+    override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         addPreferencesFromResource(R.xml.prefs_screen_key_press)
 

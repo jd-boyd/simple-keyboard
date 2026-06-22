@@ -53,46 +53,38 @@ abstract class SubScreenFragment :
             this.sharedPreferences!!.getStringSet(Settings.ACTIVE_RESTRICTIONS, null)
         if (restrictionKeys != null && !restrictionKeys.isEmpty()) {
             val group: PreferenceGroup = getPreferenceScreen()
-            val count = group.getPreferenceCount()
-            for (index in 0..<count) {
+            val count = group.preferenceCount
+            for (index in 0 until count) {
                 val preference = group.getPreference(index)
-                if (restrictionKeys.contains(preference.getKey())) {
-                    preference.setEnabled(false)
+                if (restrictionKeys.contains(preference.key)) {
+                    preference.isEnabled = false
                 }
             }
         }
     }
 
-    @Deprecated("Deprecated in Java")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        super.getPreferenceManager().setStorageDeviceProtected()
+        preferenceManager.setStorageDeviceProtected()
 
-        mSharedPreferenceChangeListener = object : OnSharedPreferenceChangeListener {
-            override fun onSharedPreferenceChanged(
-                prefs: SharedPreferences?,
-                key: String?,
-            ) {
-                val fragment = this@SubScreenFragment
-                val context: Context? = fragment.getActivity()
-                if (context == null || fragment.getPreferenceScreen() == null) {
-                    val tag = fragment.javaClass.getSimpleName()
-                    // TODO: Introduce a static function to register this class and ensure that
-                    // onCreate must be called before "onSharedPreferenceChanged" is called.
-                    Log.w(tag, "onSharedPreferenceChanged called before activity starts.")
-                    return
-                }
-                BackupManager(context).dataChanged()
-                fragment.onSharedPreferenceChanged(prefs, key)
+        mSharedPreferenceChangeListener = OnSharedPreferenceChangeListener { prefs, key ->
+            val fragment = this@SubScreenFragment
+            val context: Context? = fragment.activity
+            if (context == null || fragment.preferenceScreen == null) {
+                val tag = fragment.javaClass.simpleName
+                Log.w(tag, "onSharedPreferenceChanged called before activity starts.")
+                return@OnSharedPreferenceChangeListener
             }
+            BackupManager(context).dataChanged()
+            fragment.onSharedPreferenceChanged(prefs, key)
         }
-        this.sharedPreferences!!.registerOnSharedPreferenceChangeListener(
+        this.sharedPreferences?.registerOnSharedPreferenceChangeListener(
             mSharedPreferenceChangeListener
         )
     }
 
     override fun onDestroy() {
-        this.sharedPreferences!!.unregisterOnSharedPreferenceChangeListener(
+        this.sharedPreferences?.unregisterOnSharedPreferenceChangeListener(
             mSharedPreferenceChangeListener
         )
         super.onDestroy()
@@ -113,7 +105,7 @@ abstract class SubScreenFragment :
         ) {
             val preference = screen.findPreference(prefKey)
             if (preference != null) {
-                preference.setEnabled(enabled)
+                preference.isEnabled = enabled
             }
         }
     }

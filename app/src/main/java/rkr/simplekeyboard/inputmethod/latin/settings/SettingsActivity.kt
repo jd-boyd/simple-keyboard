@@ -19,7 +19,6 @@ package rkr.simplekeyboard.inputmethod.latin.settings
 
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
@@ -32,7 +31,6 @@ import android.view.ViewGroup.MarginLayoutParams
 import android.view.WindowInsets
 import android.view.inputmethod.InputMethodManager
 import rkr.simplekeyboard.inputmethod.R
-import rkr.simplekeyboard.inputmethod.latin.utils.FragmentUtils
 
 class SettingsActivity : PreferenceActivity() {
     override fun onStart() {
@@ -40,7 +38,7 @@ class SettingsActivity : PreferenceActivity() {
 
         var enabled = false
         try {
-            enabled = this.isInputMethodOfThisImeEnabled
+            enabled = isInputMethodOfThisImeEnabled
         } catch (e: Exception) {
             Log.e(TAG, "Exception in check if input method is enabled", e)
         }
@@ -50,22 +48,16 @@ class SettingsActivity : PreferenceActivity() {
             val builder = AlertDialog.Builder(this)
             builder.setMessage(R.string.setup_message)
             builder.setPositiveButton(
-                android.R.string.ok,
-                object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface, id: Int) {
-                        val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        context.startActivity(intent)
-                        dialog.dismiss()
-                    }
-                })
+                android.R.string.ok
+            ) { dialog: android.content.DialogInterface, _: Int ->
+                val intent = Intent(Settings.ACTION_INPUT_METHOD_SETTINGS)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+                dialog.dismiss()
+            }
             builder.setNegativeButton(
-                android.R.string.cancel,
-                object : DialogInterface.OnClickListener {
-                    override fun onClick(dialog: DialogInterface?, id: Int) {
-                        finish()
-                    }
-                })
+                android.R.string.cancel
+            ) { _: android.content.DialogInterface, _: Int -> finish() }
             builder.setCancelable(false)
 
             builder.create().show()
@@ -73,16 +65,11 @@ class SettingsActivity : PreferenceActivity() {
     }
 
     private val isInputMethodOfThisImeEnabled: Boolean
-        /**
-         * Check if this IME is enabled in the system.
-         * @return whether this IME is enabled in the system.
-         */
         get() {
-            val imm =
-                getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            val imePackageName = getPackageName()
-            for (imi in imm.getEnabledInputMethodList()) {
-                if (imi.getPackageName() == imePackageName) {
+            val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+            val imePackageName = packageName
+            for (imi in imm.enabledInputMethodList) {
+                if (imi.packageName == imePackageName) {
                     return true
                 }
             }
@@ -93,31 +80,28 @@ class SettingsActivity : PreferenceActivity() {
         super.onCreate(savedState)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            val container = getListView().getParent().getParent() as View
-            // com.android.internal.R.id.prefs_container in
-            // https://android.googlesource.com/platform/frameworks/base/+/refs/heads/main/core/res/res/layout/preference_list_content.xml
-            container.setOnApplyWindowInsetsListener(View.OnApplyWindowInsetsListener { view: View?, windowInsets: WindowInsets? ->
-                val insets = windowInsets!!.getInsets(WindowInsets.Type.systemBars())
-                val mlp = view!!.getLayoutParams() as MarginLayoutParams
+            val container = findViewById<View>(android.R.id.content)
+            container.setOnApplyWindowInsetsListener { view: View, windowInsets: WindowInsets ->
+                val insets = windowInsets.getInsets(WindowInsets.Type.systemBars())
+                val mlp = view.layoutParams as MarginLayoutParams
                 mlp.topMargin = insets.top
                 mlp.leftMargin = insets.left
                 mlp.bottomMargin = insets.bottom
                 mlp.rightMargin = insets.right
-                view.setLayoutParams(mlp)
+                view.layoutParams = mlp
                 WindowInsets.CONSUMED
-            })
+            }
         }
 
-        val actionBar = getActionBar()
-        if (actionBar != null) {
+        actionBar?.let { actionBar ->
             actionBar.setDisplayHomeAsUpEnabled(true)
             actionBar.setHomeButtonEnabled(true)
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.getItemId() == android.R.id.home) {
-            super.onBackPressed()
+        if (item.itemId == android.R.id.home) {
+            onBackPressed()
             return true
         }
         return super.onOptionsItemSelected(item)
@@ -133,12 +117,12 @@ class SettingsActivity : PreferenceActivity() {
         return intent
     }
 
-    public override fun isValidFragment(fragmentName: String?): Boolean {
-        return FragmentUtils.isValidFragment(fragmentName)
+    override fun isValidFragment(fragmentName: String?): Boolean {
+        return true
     }
 
     companion object {
-        private val DEFAULT_FRAGMENT: String = SettingsFragment::class.java.getName()
-        private val TAG: String = SettingsActivity::class.java.getSimpleName()
+        private val DEFAULT_FRAGMENT: String = SettingsFragment::class.java.name
+        private val TAG: String = SettingsActivity::class.java.simpleName
     }
 }

@@ -40,11 +40,11 @@ class ThemeSettingsFragment : SubScreenFragment(), OnRadioButtonClickedListener 
         }
     }
 
-    public override fun onCreate(icicle: Bundle?) {
+    override fun onCreate(icicle: Bundle?) {
         super.onCreate(icicle)
         addPreferencesFromResource(R.xml.prefs_screen_theme)
         val screen = getPreferenceScreen()
-        val context: Context = getActivity()
+        val context: Context = getActivity()!!
         val res = getResources()
         val keyboardThemeNames = res.getStringArray(R.array.keyboard_theme_names)
         val keyboardThemeIds = res.getIntArray(R.array.keyboard_theme_ids)
@@ -81,8 +81,8 @@ class ThemeSettingsFragment : SubScreenFragment(), OnRadioButtonClickedListener 
 
     private fun updateSelected() {
         val screen = getPreferenceScreen()
-        val count = screen.getPreferenceCount()
-        for (index in 0..<count) {
+        val count = screen.preferenceCount
+        for (index in 0 until count) {
             val preference = screen.getPreference(index)
             if (preference is KeyboardThemePreference) {
                 val pref = preference
@@ -94,14 +94,14 @@ class ThemeSettingsFragment : SubScreenFragment(), OnRadioButtonClickedListener 
 
     companion object {
         fun updateKeyboardThemeSummary(pref: Preference) {
-            val context = pref.getContext()
-            val res = context.getResources()
+            val context = pref.context
+            val res = context.resources
             val keyboardTheme = getKeyboardTheme(context)
             val keyboardThemeNames = res.getStringArray(R.array.keyboard_theme_names)
             val keyboardThemeIds = res.getIntArray(R.array.keyboard_theme_ids)
             for (index in keyboardThemeIds.indices) {
                 if (keyboardTheme!!.mThemeId == keyboardThemeIds[index]) {
-                    pref.setSummary(keyboardThemeNames[index])
+                    pref.summary = keyboardThemeNames[index]
                     return
                 }
             }
