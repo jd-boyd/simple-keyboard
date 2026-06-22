@@ -23,6 +23,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.media.AudioManager;
 import android.os.Bundle;
+import android.preference.Preference;
 
 import rkr.simplekeyboard.inputmethod.R;
 import rkr.simplekeyboard.inputmethod.latin.AudioAndHapticFeedbackManager;
@@ -52,7 +53,10 @@ public final class KeyPressSettingsFragment extends SubScreenFragment {
         AudioAndHapticFeedbackManager.init(context);
 
         if (!AudioAndHapticFeedbackManager.getInstance().hasVibrator()) {
-            removePreference(Settings.PREF_VIBRATE_ON);
+            final Preference pref = findPreference(Settings.PREF_VIBRATE_ON);
+            if (pref != null) {
+                getPreferenceScreen().removePreference(pref);
+            }
         }
 
         setupKeypressSoundVolumeSettings();

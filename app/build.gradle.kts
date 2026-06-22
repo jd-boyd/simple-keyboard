@@ -16,7 +16,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false //true
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -27,13 +27,13 @@ android {
     namespace = "rkr.simplekeyboard.inputmethod"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_21 // 17
-        targetCompatibility = JavaVersion.VERSION_21 // 17
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
 
     kotlin {
         compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21) //17
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         }
     }
 }
@@ -43,7 +43,7 @@ dependencies {
 }
 
 // ktlint configuration
-ktlint {
+project.ktlint {
     version.set("1.0.1")
     debug.set(false)
     verbose.set(true)

@@ -22,8 +22,10 @@ import android.util.AttributeSet
 import android.widget.RelativeLayout
 import rkr.simplekeyboard.inputmethod.latin.common.CoordinateUtils
 
-class DrawingPreviewPlacerView(context: Context?, attrs: AttributeSet?) :
-    RelativeLayout(context, attrs) {
+class DrawingPreviewPlacerView(
+    context: Context?,
+    attrs: AttributeSet?,
+) : RelativeLayout(context, attrs) {
     private val mKeyboardViewOrigin: IntArray = CoordinateUtils.newInstance()
 
     init {

@@ -14,22 +14,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.latin.utils
 
-package rkr.simplekeyboard.inputmethod.latin.utils;
+import android.content.Context
+import android.view.ContextThemeWrapper
+import rkr.simplekeyboard.inputmethod.R
 
-import android.content.Context;
-import android.view.ContextThemeWrapper;
-
-import rkr.simplekeyboard.inputmethod.R;
-
-public final class DialogUtils {
-    private DialogUtils() {
-        // This utility class is not publicly instantiable.
-    }
-
-    public static Context getPlatformDialogThemeContext(final Context context) {
+object DialogUtils {
+    @JvmStatic
+    fun getPlatformDialogThemeContext(context: Context?): Context {
         // Because {@link AlertDialog.Builder.create()} doesn't honor the specified theme with
         // createThemeContextWrapper=false, the result dialog box has unneeded paddings around it.
-        return new ContextThemeWrapper(context, R.style.platformDialogTheme);
+        return ContextThemeWrapper(context, R.style.platformDialogTheme)
     }
 }

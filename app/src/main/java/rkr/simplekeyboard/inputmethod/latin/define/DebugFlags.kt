@@ -14,19 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.latin.define
 
-package rkr.simplekeyboard.inputmethod.latin.define;
+import android.content.SharedPreferences
 
-import android.content.SharedPreferences;
+object DebugFlags {
+    const val DEBUG_ENABLED: Boolean = false
 
-public final class DebugFlags {
-    public static final boolean DEBUG_ENABLED = false;
-
-    private DebugFlags() {
-        // This class is not publicly instantiable.
-    }
-
-    @SuppressWarnings("unused")
-    public static void init(final SharedPreferences prefs) {
+    @JvmStatic
+    @Suppress("unused")
+    fun init(prefs: SharedPreferences?) {
     }
 }

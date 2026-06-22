@@ -14,15 +14,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.latin
 
-package rkr.simplekeyboard.inputmethod.latin;
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.FrameLayout
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.FrameLayout;
-
-public final class InputView extends FrameLayout {
-    public InputView(final Context context, final AttributeSet attrs) {
-        super(context, attrs, 0);
-    }
-}
+class InputView(
+    context: Context,
+    attrs: AttributeSet?,
+) : FrameLayout(context, attrs, 0)

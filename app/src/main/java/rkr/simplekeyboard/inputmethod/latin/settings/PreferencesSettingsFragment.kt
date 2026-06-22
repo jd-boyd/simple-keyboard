@@ -15,17 +15,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.latin.settings
 
-package rkr.simplekeyboard.inputmethod.latin.settings;
+import android.content.SharedPreferences
+import android.os.Build
+import android.os.Bundle
+import rkr.simplekeyboard.inputmethod.R
+import rkr.simplekeyboard.inputmethod.keyboard.KeyboardLayoutSet
 
-import android.content.SharedPreferences;
-import android.os.Build;
-import android.os.Bundle;
-
-import rkr.simplekeyboard.inputmethod.R;
-import rkr.simplekeyboard.inputmethod.keyboard.KeyboardLayoutSet;
-
-/**
+/*
  * "Preferences" settings sub screen.
  *
  * This settings sub screen handles the following input preferences.
@@ -38,22 +36,28 @@ import rkr.simplekeyboard.inputmethod.keyboard.KeyboardLayoutSet;
  * - Space swipe cursor move
  * - Delete swipe
  */
-public final class PreferencesSettingsFragment extends SubScreenFragment {
-    @Override
-    public void onCreate(final Bundle icicle) {
-        super.onCreate(icicle);
-        addPreferencesFromResource(R.xml.prefs_screen_preferences);
+class PreferencesSettingsFragment : SubScreenFragment() {
+    @Deprecated("Deprecated in Java")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        addPreferencesFromResource(R.xml.prefs_screen_preferences)
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.BAKLAVA) {
-            removePreference(Settings.PREF_USE_ON_SCREEN);
+            val pref = findPreference(Settings.PREF_USE_ON_SCREEN)
+            if (pref != null) {
+                preferenceScreen.removePreference(pref)
+            }
         }
     }
 
-    @Override
-    public void onSharedPreferenceChanged(final SharedPreferences prefs, final String key) {
-        if (key.equals(Settings.PREF_SHOW_SPECIAL_CHARS) ||
-                key.equals(Settings.PREF_SHOW_NUMBER_ROW)) {
-            KeyboardLayoutSet.onKeyboardThemeChanged();
+    override fun onSharedPreferenceChanged(
+        prefs: SharedPreferences?,
+        key: String?,
+    ) {
+        if (key == Settings.PREF_SHOW_SPECIAL_CHARS ||
+            key == Settings.PREF_SHOW_NUMBER_ROW
+        ) {
+            KeyboardLayoutSet.onKeyboardThemeChanged()
         }
     }
 }

@@ -34,7 +34,7 @@ import java.util.HashSet;
 import rkr.simplekeyboard.inputmethod.keyboard.Key;
 
 /**
- * The pop up key preview view.
+ * The pop-up key preview view.
  */
 public class KeyPreviewView extends TextView {
     private final Rect mBackgroundPadding = new Rect();

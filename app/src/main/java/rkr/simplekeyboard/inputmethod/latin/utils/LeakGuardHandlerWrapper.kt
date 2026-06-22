@@ -14,27 +14,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+package rkr.simplekeyboard.inputmethod.latin.utils
 
-package rkr.simplekeyboard.inputmethod.latin.utils;
+import android.os.Handler
+import android.os.Looper
+import java.lang.ref.WeakReference
 
-import android.os.Handler;
-import android.os.Looper;
+open class LeakGuardHandlerWrapper<T>
+    @JvmOverloads
+    constructor(
+        ownerInstance: T?,
+        looper: Looper = Looper.myLooper()!!,
+    ) : Handler(looper) {
+        private val mOwnerInstanceRef: WeakReference<T?> = WeakReference<T?>(ownerInstance)
 
-import java.lang.ref.WeakReference;
-
-public class LeakGuardHandlerWrapper<T> extends Handler {
-    private final WeakReference<T> mOwnerInstanceRef;
-
-    public LeakGuardHandlerWrapper(final T ownerInstance) {
-        this(ownerInstance, Looper.myLooper());
+        val ownerInstance: T?
+            get() = mOwnerInstanceRef.get()
     }
-
-    public LeakGuardHandlerWrapper(final T ownerInstance, final Looper looper) {
-        super(looper);
-        mOwnerInstanceRef = new WeakReference<>(ownerInstance);
-    }
-
-    public T getOwnerInstance() {
-        return mOwnerInstanceRef.get();
-    }
-}
