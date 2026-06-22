@@ -40,6 +40,12 @@ android {
 
 dependencies {
     implementation("androidx.annotation:annotation-jvm:1.10.0")
+    implementation("androidx.preference:preference-ktx:1.2.1") {
+        exclude(group = "androidx.annotation", module = "annotation")
+    }
+    implementation("androidx.fragment:fragment-ktx:1.8.5") {
+        exclude(group = "androidx.annotation", module = "annotation")
+    }
 }
 
 // ktlint configuration

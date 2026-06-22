@@ -69,7 +69,10 @@ abstract class SubScreenFragment :
         super.getPreferenceManager().setStorageDeviceProtected()
 
         mSharedPreferenceChangeListener = object : OnSharedPreferenceChangeListener {
-            override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
+            override fun onSharedPreferenceChanged(
+                prefs: SharedPreferences?,
+                key: String?,
+            ) {
                 val fragment = this@SubScreenFragment
                 val context: Context? = fragment.getActivity()
                 if (context == null || fragment.getPreferenceScreen() == null) {
