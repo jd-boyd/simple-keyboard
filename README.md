@@ -38,3 +38,11 @@ Feature it doesn't have and probably will never have:
 Licensed under Apache License Version 2
 
 This keyboard is based on AOSP LatinIME keyboard. You can get the original source code in https://android.googlesource.com/platform/packages/inputmethods/LatinIME/
+
+### Authors & Contributors
+
+- **Raimondas Rimkus (rkkr)** — Primary maintainer (2017–present)
+- **wittmane** — Contributor (2021–present)
+- **Micha LaQua** — Contributor
+
+See the file headers and Git history for a full list of contributors.

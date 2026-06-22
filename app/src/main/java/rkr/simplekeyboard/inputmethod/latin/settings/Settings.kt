@@ -3,6 +3,7 @@
  * Copyright (C) 2025 Raimondas Rimkus
  * Copyright (C) 2024 wittmane
  * Copyright (C) 2019 Micha LaQua
+ * Copyright (C) 2026 Joshua D. Boyd
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
