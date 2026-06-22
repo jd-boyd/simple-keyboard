@@ -30,7 +30,7 @@ open class RadioButtonPreference @JvmOverloads constructor(
     context: Context?, attrs: AttributeSet? = null,
     defStyleAttr: Int = android.R.attr.preferenceStyle
 ) : Preference(context, attrs, defStyleAttr) {
-    internal interface OnRadioButtonClickedListener {
+    interface OnRadioButtonClickedListener {
         /**
          * Called when this preference needs to be saved its state.
          * 

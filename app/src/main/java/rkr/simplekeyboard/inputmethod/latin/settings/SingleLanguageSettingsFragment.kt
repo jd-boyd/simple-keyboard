@@ -85,7 +85,8 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
      * @param context the context for this application.
      */
     private fun buildSubtypePreferences(
-        locale: String?, group: PreferenceGroup,
+        locale: String?,
+        group: PreferenceGroup,
         context: Context
     ) {
         val enabledSubtypes = mRichImm!!.getEnabledSubtypes(false)
@@ -101,8 +102,7 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
 
         // if there is only one subtype that is checked, the preference for it should be disabled to
         // prevent all of the subtypes for the language from being removed
-        val checkedPrefs =
-            this.checkedSubtypePreferences
+        val checkedPrefs = checkedSubtypePreferences
         if (checkedPrefs.size == 1) {
             checkedPrefs.get(0).setEnabled(false)
         }
@@ -121,7 +121,7 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
         context: Context?
     ): SubtypePreference {
         val pref = SubtypePreference(context, subtype)
-        pref.setTitle(subtype.getLayoutDisplayName())
+        pref.setTitle(subtype.layoutDisplayName)
         pref.setChecked(checked)
 
         pref.setOnPreferenceChangeListener(object : Preference.OnPreferenceChangeListener {
@@ -130,9 +130,9 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
                     return false
                 }
                 val isEnabling = newValue
-                val pref: SubtypePreference = preference as SubtypePreference
+                val pref = preference as SubtypePreference
                 val checkedPrefs: MutableList<SubtypePreference> =
-                    this.checkedSubtypePreferences
+                    this@SingleLanguageSettingsFragment.checkedSubtypePreferences
                 if (checkedPrefs.size == 1) {
                     checkedPrefs.get(0).setEnabled(false)
                 }
@@ -173,8 +173,7 @@ class SingleLanguageSettingsFragment : PreferenceFragment() {
          * @return a list of all of the subtype preferences that are checked.
          */
         get() {
-            val prefs: MutableList<SubtypePreference> =
-                ArrayList<SubtypePreference>()
+            val prefs: MutableList<SubtypePreference> = ArrayList<SubtypePreference>()
             for (pref in mSubtypePreferences!!) {
                 if (pref.isChecked()) {
                     prefs.add(pref)

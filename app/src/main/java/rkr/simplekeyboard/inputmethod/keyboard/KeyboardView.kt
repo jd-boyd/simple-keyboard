@@ -188,7 +188,7 @@ open class KeyboardView
                     getDeviceSharedPreferences(context)
                 mCustomColor =
                     Settings.readKeyboardColor(
-                        prefs,
+                        prefs!!,
                         context,
                     )
                 mTheme =

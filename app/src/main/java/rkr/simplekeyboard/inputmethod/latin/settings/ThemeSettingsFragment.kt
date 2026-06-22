@@ -74,8 +74,9 @@ class ThemeSettingsFragment : SubScreenFragment(), OnRadioButtonClickedListener 
 
     override fun onPause() {
         super.onPause()
-        KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId, sharedPreferences!!)
-        Settings.removeKeyboardColor(sharedPreferences)
+        val prefs = sharedPreferences!!
+        KeyboardTheme.saveKeyboardThemeId(mSelectedThemeId, prefs)
+        Settings.removeKeyboardColor(prefs)
     }
 
     private fun updateSelected() {

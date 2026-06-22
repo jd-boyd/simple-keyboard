@@ -20,6 +20,7 @@ import android.content.res.Resources
 import rkr.simplekeyboard.inputmethod.R
 import rkr.simplekeyboard.inputmethod.latin.common.LocaleUtils
 import rkr.simplekeyboard.inputmethod.latin.utils.LocaleResourceUtils
+import java.util.Locale
 
 /**
  * A keyboard layout for a locale.

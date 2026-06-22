@@ -50,10 +50,10 @@ import java.util.TreeSet
  */
 class LanguagesSettingsFragment : PreferenceFragment() {
     private var mRichImm: RichInputMethodManager? = null
-    private var mUsedLocaleNames: Array<CharSequence?>?
-    private var mUsedLocaleValues: Array<String?>
-    private var mUnusedLocaleNames: Array<CharSequence?>
-    private var mUnusedLocaleValues: Array<String?>
+    private var mUsedLocaleNames: Array<CharSequence?>? = null
+    private var mUsedLocaleValues: Array<String?>? = null
+    private var mUnusedLocaleNames: Array<CharSequence?>? = null
+    private var mUnusedLocaleValues: Array<String?>? = null
     private var mAlertDialog: AlertDialog? = null
     private var mView: View? = null
 
@@ -68,7 +68,8 @@ class LanguagesSettingsFragment : PreferenceFragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater?, container: ViewGroup?,
+        inflater: LayoutInflater?,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         mView = super.onCreateView(inflater, container, savedInstanceState)
@@ -150,12 +151,12 @@ class LanguagesSettingsFragment : PreferenceFragment() {
                 Log.d(
                     TAG, String.format(
                         "Enabled subtype: %-6s 0x%08x %11d %s",
-                        subtype.getLocale(), subtype.hashCode(), subtype.hashCode(),
-                        subtype.getName()
+                        subtype.locale, subtype.hashCode(), subtype.hashCode(),
+                        subtype.name
                     )
                 )
             }
-            locales.add(subtype.getLocaleObject())
+            locales.add(subtype.localeObject!!)
         }
 
         return locales
@@ -192,12 +193,12 @@ class LanguagesSettingsFragment : PreferenceFragment() {
      */
     private fun buildLanguagePreferences(
         locales: SortedSet<Locale>,
-        group: PreferenceGroup, context: Context?
+        group: PreferenceGroup,
+        context: Context?
     ) {
         for (locale in locales) {
             val localeString = LocaleUtils.getLocaleString(locale)
-            val pref =
-                SingleLanguagePreference(context, localeString)
+            val pref = SingleLanguagePreference(context, localeString)
             group.addPreference(pref)
         }
     }
@@ -216,7 +217,7 @@ class LanguagesSettingsFragment : PreferenceFragment() {
         var i = 0
         for (locale in usedLocales) {
             val localeString = LocaleUtils.getLocaleString(locale)
-            mUsedLocaleValues[i] = localeString
+            mUsedLocaleValues!![i] = localeString
             mUsedLocaleNames!![i] =
                 LocaleResourceUtils.getLocaleDisplayNameInSystemLocale(localeString)
             i++
@@ -227,8 +228,8 @@ class LanguagesSettingsFragment : PreferenceFragment() {
         i = 0
         for (locale in unusedLocales) {
             val localeString = LocaleUtils.getLocaleString(locale)
-            mUnusedLocaleValues[i] = localeString
-            mUnusedLocaleNames[i] =
+            mUnusedLocaleValues!![i] = localeString
+            mUnusedLocaleNames!![i] =
                 LocaleResourceUtils.getLocaleDisplayNameInSystemLocale(localeString)
             i++
         }
@@ -241,14 +242,15 @@ class LanguagesSettingsFragment : PreferenceFragment() {
         showMultiChoiceDialog(
             mUnusedLocaleNames, R.string.add_language, R.string.add, true,
             object : OnMultiChoiceDialogAcceptListener {
-                override fun onClick(checkedItems: BooleanArray) {
+                override fun onClick(checkedItems: BooleanArray?) {
+                    if (checkedItems == null) return
                     // enable the default layout for all of the checked languages
                     for (i in checkedItems.indices) {
                         if (!checkedItems[i]) {
                             continue
                         }
                         val subtype = SubtypeLocaleUtils.getDefaultSubtype(
-                            mUnusedLocaleValues[i],
+                            mUnusedLocaleValues!![i],
                             this@LanguagesSettingsFragment.getResources()
                         )
                         mRichImm!!.addSubtype(subtype)
@@ -268,14 +270,15 @@ class LanguagesSettingsFragment : PreferenceFragment() {
         showMultiChoiceDialog(
             mUsedLocaleNames!!, R.string.remove_language, R.string.remove, false,
             object : OnMultiChoiceDialogAcceptListener {
-                override fun onClick(checkedItems: BooleanArray) {
+                override fun onClick(checkedItems: BooleanArray?) {
+                    if (checkedItems == null) return
                     // disable the layouts for all of the checked languages
                     for (i in checkedItems.indices) {
                         if (!checkedItems[i]) {
                             continue
                         }
                         val subtypes =
-                            mRichImm!!.getEnabledSubtypesForLocale(mUsedLocaleValues[i])
+                            mRichImm!!.getEnabledSubtypesForLocale(mUsedLocaleValues!![i])
                         for (subtype in subtypes) {
                             mRichImm!!.removeSubtype(subtype)
                         }
@@ -298,52 +301,44 @@ class LanguagesSettingsFragment : PreferenceFragment() {
      * @param listener the listener for when the user clicks the positive button.
      */
     private fun showMultiChoiceDialog(
-        names: Array<CharSequence?>, titleRes: Int,
-        positiveButtonRes: Int, allowAllChecked: Boolean,
+        names: Array<CharSequence?>?,
+        titleRes: Int,
+        positiveButtonRes: Int,
+        allowAllChecked: Boolean,
         listener: OnMultiChoiceDialogAcceptListener
     ) {
-        val checkedItems = BooleanArray(names.size)
+        val checkedItems = BooleanArray(names?.size ?: 0)
         mAlertDialog = AlertDialog.Builder(getActivity())
             .setTitle(titleRes)
             .setMultiChoiceItems(
                 names, checkedItems,
-                object : OnMultiChoiceClickListener {
-                    override fun onClick(
-                        dialogInterface: DialogInterface?,
-                        which: Int, isChecked: Boolean
-                    ) {
-                        // make sure the positive button is only enabled when at least one
-                        // item is checked and when not all of the items are checked (unless
-                        // allowAllChecked is true)
-                        var hasCheckedItem = false
-                        var hasUncheckedItem = false
-                        for (itemChecked in checkedItems) {
-                            if (itemChecked) {
-                                hasCheckedItem = true
-                                if (allowAllChecked) {
-                                    break
-                                }
-                            } else {
-                                hasUncheckedItem = true
-                            }
-                            if (hasCheckedItem && hasUncheckedItem) {
+                OnMultiChoiceClickListener { _: DialogInterface?, _: Int, _: Boolean ->
+                    // make sure the positive button is only enabled when at least one
+                    // item is checked and when not all of the items are checked (unless
+                    // allowAllChecked is true)
+                    var hasCheckedItem = false
+                    var hasUncheckedItem = false
+                    for (itemChecked in checkedItems) {
+                        if (itemChecked) {
+                            hasCheckedItem = true
+                            if (allowAllChecked) {
                                 break
                             }
+                        } else {
+                            hasUncheckedItem = true
                         }
-                        mAlertDialog!!.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(
-                            hasCheckedItem && (hasUncheckedItem || allowAllChecked)
-                        )
+                        if (hasCheckedItem && hasUncheckedItem) {
+                            break
+                        }
                     }
+                    mAlertDialog!!.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(
+                        hasCheckedItem && (hasUncheckedItem || allowAllChecked)
+                    )
                 })
-            .setPositiveButton(positiveButtonRes, object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                    listener.onClick(checkedItems)
-                }
-            })
-            .setNegativeButton(android.R.string.cancel, object : DialogInterface.OnClickListener {
-                override fun onClick(dialog: DialogInterface?, which: Int) {
-                }
-            })
+            .setPositiveButton(positiveButtonRes) { _: DialogInterface?, _: Int ->
+                listener.onClick(checkedItems)
+            }
+            .setNegativeButton(android.R.string.cancel, null)
             .create()
         mAlertDialog!!.show()
         // disable the positive button since nothing is checked by default

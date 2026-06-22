@@ -49,11 +49,11 @@ class AppearanceSettingsFragment : SubScreenFragment() {
         }
     }
 
-    public override fun onSharedPreferenceChanged(prefs: SharedPreferences, key: String?) {
+    public override fun onSharedPreferenceChanged(prefs: SharedPreferences?, key: String?) {
         if (KeyboardTheme.KEYBOARD_THEME_KEY == key) {
             ThemeSettingsFragment.updateKeyboardThemeSummary(findPreference(Settings.SCREEN_THEME))
 
-            val theme = getKeyboardTheme(prefs)
+            val theme = getKeyboardTheme(prefs!!)
             setPreferenceEnabled(Settings.PREF_KEYBOARD_COLOR, theme!!.mCustomColorSupport)
         }
     }
@@ -87,7 +87,7 @@ class AppearanceSettingsFragment : SubScreenFragment() {
             }
 
             override fun readValue(key: String?): Int {
-                return getPercentageFromValue(Settings.readKeyboardHeight(prefs, 1f))
+                return getPercentageFromValue(Settings.readKeyboardHeight(prefs!!, 1f))
             }
 
             override fun readDefaultValue(key: String?): Int {
@@ -124,7 +124,7 @@ class AppearanceSettingsFragment : SubScreenFragment() {
             }
 
             override fun readValue(key: String?): Int {
-                return Settings.readBottomOffsetPortrait(prefs)
+                return Settings.readBottomOffsetPortrait(prefs!!)
             }
 
             override fun readDefaultValue(key: String?): Int {
@@ -157,11 +157,11 @@ class AppearanceSettingsFragment : SubScreenFragment() {
             }
 
             override fun readValue(key: String?): Int {
-                return Settings.readKeyboardColor(prefs, context)
+                return Settings.readKeyboardColor(prefs!!, context)
             }
 
             override fun writeDefaultValue(key: String?) {
-                Settings.removeKeyboardColor(prefs)
+                Settings.removeKeyboardColor(prefs!!)
             }
         })
     }

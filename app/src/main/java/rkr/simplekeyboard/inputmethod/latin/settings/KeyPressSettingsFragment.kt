@@ -86,7 +86,7 @@ class KeyPressSettingsFragment : SubScreenFragment() {
             }
 
             override fun readValue(key: String?): Int {
-                return getPercentageFromValue(Settings.readKeypressSoundVolume(prefs))
+                return getPercentageFromValue(Settings.readKeypressSoundVolume(prefs!!))
             }
 
             override fun readDefaultValue(key: String?): Int {
@@ -127,7 +127,7 @@ class KeyPressSettingsFragment : SubScreenFragment() {
             }
 
             override fun readValue(key: String?): Int {
-                return Settings.readKeyLongpressTimeout(prefs, res)
+                return Settings.readKeyLongpressTimeout(prefs!!, res)
             }
 
             override fun readDefaultValue(key: String?): Int {

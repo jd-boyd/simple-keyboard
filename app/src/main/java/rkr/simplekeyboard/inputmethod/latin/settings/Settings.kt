@@ -119,6 +119,7 @@ class Settings private constructor() : BroadcastReceiver(), OnSharedPreferenceCh
         private val UNDEFINED_PREFERENCE_VALUE_FLOAT = -1.0f
         private val UNDEFINED_PREFERENCE_VALUE_INT = -1
 
+        @JvmStatic
         val instance: Settings = Settings()
 
         @JvmStatic
@@ -189,7 +190,7 @@ class Settings private constructor() : BroadcastReceiver(), OnSharedPreferenceCh
                                 TAG,
                                 "Loading restriction: " + key + "=" + appRestrictions.getString(key)
                             )
-                            val color = appRestrictions.getString(key)
+                            var color = appRestrictions.getString(key)
                             if (color!!.startsWith("#")) {
                                 try {
                                     color = "FF" + color.substring(1)
